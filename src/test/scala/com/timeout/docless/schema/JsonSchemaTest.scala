@@ -12,8 +12,7 @@ object JsonSchemaTest {
   val ref = "$ref"
 
   def id[T: u.WeakTypeTag] =
-    getClass.getCanonicalName.replace('$', '.') +
-      implicitly[u.WeakTypeTag[T]].tpe.typeSymbol.name
+    JsonSchema.tagId(implicitly[u.WeakTypeTag[T]])
 
   sealed abstract class E extends EnumEntry
 
@@ -134,6 +133,23 @@ class JsonSchemaTest extends FreeSpec {
 
       schema.id should ===(id[NestedOpt])
       schema.relatedDefinitions should ===(Set(fs.NamedDefinition("fooOpt")))
+    }
+
+    "handles list of non-primitive types" in {
+      implicit val fs: JsonSchema[Foo] = fooSchema
+
+      val schema = JsonSchema.deriveFor[List[Foo]]
+      parser.parse(s"""
+                      |{
+                      |  "type": "array",
+                      |  "items":  {
+                      |    "$ref" : "#/definitions/${id[Foo]}"
+                      |  }
+                      |}
+                      |
+          """.stripMargin) should ===(Right(schema.asJson))
+
+      schema.id should ===(id[List[Foo]])
     }
 
     "with types extending enumeratum.EnumEntry" - {
