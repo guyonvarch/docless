@@ -1,9 +1,13 @@
 
-organization := "com.timeout"
+organization := "dividat"
 
 name := "docless"
 
-version := "0.6.0-SNAPSHOT"
+version := "0.0.1"
+
+bintrayOrganization := Some("dividat")
+
+licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
 val circeVersion      = "0.9.1"
 val enumeratumVersion = "1.5.13"
