@@ -3,7 +3,7 @@ organization := "dividat"
 
 name := "docless"
 
-version := "0.0.1"
+version := "0.0.2"
 
 bintrayOrganization := Some("dividat")
 
