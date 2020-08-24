@@ -3,8 +3,8 @@ package com.timeout.docless.schema
 import com.timeout.docless.schema.derive.{Combinator, Config}
 import enumeratum._
 import io.circe._
-import org.scalatest.FreeSpec
-import org.scalatest.Matchers._
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.reflect.runtime.{universe => u}
 
@@ -49,7 +49,7 @@ object JsonSchemaTest {
   case class D(enum: TheEnum) extends TheADT
 }
 
-class JsonSchemaTest extends FreeSpec {
+class JsonSchemaTest extends AnyFreeSpec with Matchers {
 
   import JsonSchemaTest._
 

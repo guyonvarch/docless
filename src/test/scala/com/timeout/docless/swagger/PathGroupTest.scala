@@ -1,6 +1,8 @@
 package com.timeout.docless.swagger
 
-import org.scalatest.{FreeSpec, Inside, Matchers}
+import org.scalatest.Inside
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import cats.data.NonEmptyList
 import cats.data.Validated
 import SchemaError._
@@ -8,7 +10,7 @@ import com.timeout.docless.schema.JsonSchema
 import com.timeout.docless.schema.JsonSchema._
 import com.timeout.docless.swagger.Method._
 
-class PathGroupTest extends FreeSpec with Matchers {
+class PathGroupTest extends AnyFreeSpec with Matchers {
   "PathGroup" - {
     val petstore = PetstoreSchema()
     val pet      = PetstoreSchema.Schemas.pet
