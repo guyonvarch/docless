@@ -1,10 +1,11 @@
 package com.timeout.docless.schema.derive
 
 import com.timeout.docless.schema.PlainEnum
-import org.scalatest.{FreeSpec, Matchers}
+import org.scalatest.freespec.AnyFreeSpec
+import org.scalatest.matchers.should.Matchers
 import PlainEnum.IdFormat
 
-class PlainEnumTest extends FreeSpec with Matchers {
+class PlainEnumTest extends AnyFreeSpec with Matchers {
   sealed trait TheEnum
   case object EnumA extends TheEnum
   case object EnumB extends TheEnum

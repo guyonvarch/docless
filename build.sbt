@@ -9,19 +9,19 @@ bintrayOrganization := Some("dividat")
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
-val circeVersion      = "0.9.1"
-val enumeratumVersion = "1.5.13"
-val enumeratumCirceVersion = "1.5.17"
-val catsVersion       = "1.1.0"
-val shapelessVersion  = "2.3.3"
-val ammoniteVersion   = "1.0.5"
+val circeVersion               = "0.13.0"
+val enumeratumVersion          = "1.6.1"
+val enumeratumCirceVersion     = "1.6.1"
+val catsVersion                = "2.1.1"
+val shapelessVersion           = "2.3.3"
+val ammoniteVersion            = "2.2.0"
+val scalaTestVersion           = "3.2.0"
+val jsonSchemaValidatorVersion = "2.2.6"
 
 val readme     = "README.md"
 val readmePath = file(".") / readme
 
-scalaVersion := "2.12.4"
-
-crossScalaVersions := Seq("2.11.9", "2.12.4")
+scalaVersion := "2.12.8"
 
 useGpg := true
 useGpgAgent := true
@@ -41,8 +41,8 @@ libraryDependencies ++= Seq(
   "io.circe"       %% "circe-core"           % circeVersion,
   "io.circe"       %% "circe-parser"         % circeVersion,
   "io.circe"       %% "circe-generic"        % circeVersion,
-  "org.scalatest"  %% "scalatest"            % "3.0.5" % "test",
-  "com.github.fge" % "json-schema-validator" % "2.2.6" % "test",
+  "org.scalatest"  %% "scalatest"            % scalaTestVersion % "test",
+  "com.github.fge" % "json-schema-validator" % jsonSchemaValidatorVersion % "test",
   "com.lihaoyi"    % "ammonite"              % ammoniteVersion % "test" cross CrossVersion.full
 )
 
@@ -92,5 +92,5 @@ val pandocReadme =
        )
        throw e
    }
- 
+
  }
