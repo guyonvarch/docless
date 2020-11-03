@@ -3,7 +3,7 @@ organization := "dividat"
 
 name := "docless"
 
-version := "0.1.0"
+version := "0.1.1"
 
 bintrayOrganization := Some("dividat")
 
@@ -18,17 +18,17 @@ val ammoniteVersion            = "2.2.0"
 val scalaTestVersion           = "3.2.0"
 val jsonSchemaValidatorVersion = "2.2.6"
 
-val readme     = "README.md"
-val readmePath = file(".") / readme
+scalaVersion := "2.13.3"
 
-scalaVersion := "2.12.8"
+crossScalaVersions := Seq("2.12.8", "2.13.3")
 
 useGpg := true
 useGpgAgent := true
 
-enablePlugins(TutPlugin)
-
-scalacOptions += "-Ypartial-unification"
+scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+  case Some((2, n)) if n < 13 => Seq("-language:higherKinds")
+  case _                      => Seq()
+})
 
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect"         % scalaVersion.value,
@@ -58,39 +58,3 @@ initialCommands in (Test, console) +=
   s"""
     |ammonite.Main(predef="${predef.mkString(";")}").run()
   """.stripMargin
-
-val copyReadme =
-  taskKey[File](s"Copy readme file to project root")
-
-copyReadme := {
-  val _      = (tut in Compile).value
-  val tutDir = tutTargetDirectory.value
-  val log    = streams.value.log
-
-  log.info(s"Copying ${tutDir / readme} to ${file(".") / readme}")
-
-  IO.copyFile(
-    tutDir / readme,
-    readmePath
-  )
-  readmePath
-}
-
-val pandocReadme =
-  taskKey[Unit](s"Add a table of content to the README using pandoc")
-
- pandocReadme := {
-   val readme = copyReadme.value
-   val log    = streams.value.log
-   val cmd =
-     s"pandoc -B doc/header.md -f markdown_github --toc -s -S $readme -o $readme"
-   log.info(s"Running pandoc: $cmd}")
-   try { new Fork(cmd, None) } catch {
-     case e: java.io.IOException =>
-       log.error(
-         "You might need to install the pandoc executable! Please follow instructions here: http://pandoc.org/installing.html"
-       )
-       throw e
-   }
-
- }
