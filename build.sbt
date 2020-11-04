@@ -33,6 +33,7 @@ scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
 libraryDependencies ++= Seq(
   "org.scala-lang" % "scala-reflect"         % scalaVersion.value,
   "com.chuusai"    %% "shapeless"            % shapelessVersion,
+
   "com.beachape"   %% "enumeratum"           % enumeratumVersion,
   "com.beachape"   %% "enumeratum-circe"     % enumeratumCirceVersion,
   "org.typelevel"  %% "cats-core"            % catsVersion,
