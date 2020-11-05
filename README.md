@@ -1,8 +1,5 @@
 # Docless
 
-[![Build Status](https://travis-ci.org/timeoutdigital/docless.svg?branch=master)](https://travis-ci.org/timeoutdigital/docless)
-[![Maven Central](https://img.shields.io/maven-central/v/com.timeout/docless_2.12.svg)](http://search.maven.org/#search|ga|1|com.timeout.docless)
-
 A scala DSL to generate JSON schema and [swagger](http://swagger.io) documentation for your web services.
 
 -   [Why not just using Swagger-core?](#why-not-just-using-swagger-core)
@@ -183,13 +180,13 @@ also supported through the `EnumSchema` trait:
 import enumeratum._
 import com.timeout.docless.schema.EnumSchema
 
-sealed trait RPS extends EnumEntry with EnumEntry.Snakecase 
+sealed trait RPS extends EnumEntry with EnumEntry.Snakecase
 
 object RPS extends Enum[RPS] with EnumSchema[RPS] {
   case object Rock extends RPS
   case object Paper extends RPS
   case object Scissors extends RPS
-  
+
   override def values = findValues
 }
 ```
@@ -231,7 +228,7 @@ object PetsRoute extends PathGroup {
          Operation() //...
        )
  )
- 
+
 }
 ```
 
