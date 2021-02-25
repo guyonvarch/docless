@@ -5,9 +5,9 @@ name := "docless"
 
 version := "0.1.1"
 
-bintrayOrganization := Some("dividat")
-
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+
+publishTo := sonatypePublishToBundle.value
 
 val circeVersion               = "0.13.0"
 val enumeratumVersion          = "1.6.1"
@@ -21,9 +21,6 @@ val jsonSchemaValidatorVersion = "2.2.6"
 scalaVersion := "2.13.3"
 
 crossScalaVersions := Seq("2.12.8", "2.13.3")
-
-useGpg := true
-useGpgAgent := true
 
 scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case Some((2, n)) if n < 13 => Seq("-language:higherKinds")
