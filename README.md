@@ -33,7 +33,7 @@ Installation
 Add the following to your `build.sbt`
 
 ``` {.scala}
-libraryDependencies += "com.timeout" %% "docless" % doclessVersion
+libraryDependencies += "com.dividat" %% "docless" % doclessVersion
 ```
 
 ### JSON schema derivation
@@ -44,7 +44,7 @@ boilerplate code, this approach helps keeping documentation in sync with
 the relevant business entities.
 
 ``` {.scala}
-import com.timeout.docless.schema._
+import com.dividat.docless.schema._
 
 case class Pet(id: Int, name: String, tag: Option[String])
 
@@ -93,7 +93,7 @@ this library uses the latter as default. This can be easily overriden by
 defining an implicit instance of `derive.Config` in the local scope:
 
 ``` {.scala}
-import com.timeout.docless.schema.derive.{Config, Combinator}
+import com.dividat.docless.schema.derive.{Config, Combinator}
 
 sealed trait Contact
 case class EmailAndPhoneNum(email: String, phoneNum: String) extends Contact
@@ -154,7 +154,7 @@ identifier\
 using one of the pre-defined formats.
 
 ``` {.scala}
-import com.timeout.docless.schema.PlainEnum.IdFormat
+import com.dividat.docless.schema.PlainEnum.IdFormat
 
 implicit val format: IdFormat = IdFormat.SnakeCase
 val schema = JsonSchema.deriveEnum[Diet]
@@ -178,7 +178,7 @@ also supported through the `EnumSchema` trait:
 
 ``` {.scala}
 import enumeratum._
-import com.timeout.docless.schema.EnumSchema
+import com.dividat.docless.schema.EnumSchema
 
 sealed trait RPS extends EnumEntry with EnumEntry.Snakecase
 
@@ -201,8 +201,8 @@ together with a DSL to easily manipulate and transform it.
 
 ``` {.scala}
 
-import com.timeout.docless.swagger._
-import com.timeout.docless.schema._
+import com.dividat.docless.swagger._
+import com.dividat.docless.schema._
 
 object PetsRoute extends PathGroup {
   val petResp = petSchema.asResponse("The pet")
@@ -246,7 +246,7 @@ being these routes, controllers, or whatever else your framework calls
 them.
 
 ``` {.scala}
-import com.timeout.docless.swagger._
+import com.dividat.docless.swagger._
 
 case class Dino(name: String, extinctedSinceYears: Long, diet: Diet)
 
@@ -277,10 +277,10 @@ groups into a single Swagger API description.
 
 ``` {.scala}
 scala> val apiInfo = Info("Example API")
-apiInfo: com.timeout.docless.swagger.Info = Info(Example API,1.0,None,None,None,None)
+apiInfo: com.dividat.docless.swagger.Info = Info(Example API,1.0,None,None,None,None)
 
 scala> PathGroup.aggregate(apiInfo, List(PetsRoute, DinosRoute))
-res15: cats.data.ValidatedNel[com.timeout.docless.swagger.SchemaError,com.timeout.docless.swagger.APISchema] = Invalid(NonEmptyList(MissingDefinition(RefWithContext(TypeRef(Dino,None),ResponseContext(Get,/dinos/{id})))))
+res15: cats.data.ValidatedNel[com.dividat.docless.swagger.SchemaError,com.dividat.docless.swagger.APISchema] = Invalid(NonEmptyList(MissingDefinition(RefWithContext(TypeRef(Dino,None),ResponseContext(Get,/dinos/{id})))))
 ```
 
 The `aggregate` method will also verify that the schema definitions

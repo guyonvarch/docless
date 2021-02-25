@@ -1,5 +1,5 @@
 
-organization := "dividat"
+organization := "com.dividat"
 
 name := "docless"
 
@@ -45,8 +45,8 @@ libraryDependencies ++= Seq(
 )
 
 val predef = Seq(
-  "import com.timeout.docless.schema._",
-  "import com.timeout.docless.swagger._",
+  "import com.dividat.docless.schema._",
+  "import com.dividat.docless.swagger._",
   "import cats._",
   "import cats.syntax.all._",
   "import cats.instances.all._"
