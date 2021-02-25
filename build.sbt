@@ -1,13 +1,13 @@
 
-organization := "dividat"
+organization := "com.dividat"
 
 name := "docless"
 
-version := "0.1.1"
-
-bintrayOrganization := Some("dividat")
+version := "0.2.0"
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
+
+publishTo := sonatypePublishToBundle.value
 
 val circeVersion               = "0.13.0"
 val enumeratumVersion          = "1.6.1"
@@ -21,9 +21,6 @@ val jsonSchemaValidatorVersion = "2.2.6"
 scalaVersion := "2.13.3"
 
 crossScalaVersions := Seq("2.12.8", "2.13.3")
-
-useGpg := true
-useGpgAgent := true
 
 scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case Some((2, n)) if n < 13 => Seq("-language:higherKinds")
@@ -48,8 +45,8 @@ libraryDependencies ++= Seq(
 )
 
 val predef = Seq(
-  "import com.timeout.docless.schema._",
-  "import com.timeout.docless.swagger._",
+  "import com.dividat.docless.schema._",
+  "import com.dividat.docless.swagger._",
   "import cats._",
   "import cats.syntax.all._",
   "import cats.instances.all._"
