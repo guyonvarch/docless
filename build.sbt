@@ -3,7 +3,7 @@ organization := "com.dividat"
 
 name := "docless"
 
-version := "0.1.1"
+version := "0.2.0"
 
 licenses += ("MIT", url("http://opensource.org/licenses/MIT"))
 
