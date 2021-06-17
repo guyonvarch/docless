@@ -1,5 +1,6 @@
 package com.dividat.docless.swagger
 
+import scala.collection.immutable.{ListMap, SortedMap}
 import com.dividat.docless.schema.JsonSchema
 import com.dividat.docless.schema.JsonSchema.{ArrayRef, TypeRef}
 import io.circe._
@@ -105,11 +106,13 @@ object APISchema {
     }
 
   implicit val definitionsEnc = Encoder.instance[Definitions] { defs =>
-    defs.get.map(d => d.id -> d.json).toMap.asJson
+    // Sort definitions alphabetically
+    SortedMap.from(defs.get.map(d => d.id -> d.json)).asJson
   }
 
   implicit val securityDefinitionsEnc = Encoder.instance[SecurityDefinitions] { defs =>
-    defs.get.map(d => d.name -> d.asJson).toMap.asJson
+    // Preserve order
+    ListMap.from(defs.get.map(d => d.name -> d.asJson)).asJson
   }
 
   implicit val securityRequirementEncoder = Encoder.instance[SecurityRequirement] { s =>
@@ -122,7 +125,8 @@ object APISchema {
     rs.byStatusCode.map { case (code, resp) => code -> resp.asJson }.asJson
   }
   implicit val opParamsEnc = Encoder.instance[OperationParameters] { params =>
-    params.get.map(p => p.name -> p.asJson).toMap.asJson
+    // Preserve order
+    ListMap.from(params.get.map(p => p.name -> p.asJson)).asJson
   }
   implicit val operationEnc =
     deriveEncoder[Operation].mapJsonObject(_.remove("id"))
@@ -130,15 +134,16 @@ object APISchema {
   implicit val pathEnc = Encoder.instance[Path] { p =>
     val obj = JsonObject.singleton("parameters", p.parameters.asJson)
     p.operations
-      .foldLeft(obj) {
-        case (acc, (method, op)) =>
+      .foldRight(obj) { // Preserve order
+        case ((method, op), acc) =>
           acc.+:(method.entryName -> op.asJson)
       }
       .asJson
   }
 
   implicit val pathsEnc = Encoder.instance[Paths] { paths =>
-    paths.get.map(d => d.id -> d.asJson).toMap.asJson
+    // Preserve order
+    ListMap.from(paths.get.map(d => d.id -> d.asJson)).asJson
   }
 
   implicit val apiSchema = deriveEncoder[APISchema]
